@@ -1,0 +1,63 @@
+
+\def\make@title{
+	
+	\begin{center}
+		\includegraphics[height=2cm]{\@esilogo}
+	\end{center}
+	
+	
+	\makeatletter % changes the catcode of @ to 11
+	
+	\begin{center}
+		
+		{\Large \bfseries TH\`ESE}\\[0.5cm]
+		pour l'obtention du grade\\[0.5cm]
+		{\Large \bfseries DOCTEUR DE }\\[0.25cm]
+		{\large \bfseries \slshape L'école nationale supérieure d'informatique}\\[0.5cm]
+		Spécialité : Informatique\\[1cm]
+		Présentée et soutenue par\\[0.5cm]
+		{\LARGE \bfseries \titlecap{\@firstname}\ \MakeUppercase{\@familyname}}\\[0.5cm]
+		soutenue le \@date\\[1cm]
+		
+		
+		{\Huge \bfseries \@title}\\[0.5cm]
+		
+		\ifdefempty{\@subtitle}{}{{\LARGE \slshape ``\@subtitle"}\\[1cm]}
+		
+		Dirigée par : \textbf{Pr. ZEGOUR Djamel Eddine}
+		
+		Co-encadrée par : \textbf{Pr. HIDOUCI Walid Khaled}
+	\end{center}
+	\makeatother % changes the catcode of @ back to 12
+	
+	
+	\vfill
+	
+	\noindent
+	\textbf{Composition du jury :}
+	
+	\noindent
+	\begin{tabular}{p{.4\textwidth}p{.1\textwidth}p{.15\textwidth}p{.25\textwidth}}
+		M. BALLA Amar & Prof & ESI & Président \\
+		Mme BENATCHBA Karima & Prof & ESI & Examinatrice \\
+		M. GUESSOUM Aberezzak & Prof & Univ. Blida & Examinateur\\
+		M. FOUDIL Cherif & Prof & Univ. Biskra & Examinateur \\
+		M. ZEGOUR Djamel Eddine & Prof & ESI & Directeur de thèse \\            
+		
+	\end{tabular}
+	
+	\vfill                  
+	
+	\noindent\hrulefill\vskip 2pt
+	
+	{ \renewcommand{\arraystretch}{0.6}
+		\noindent
+		\begin{tabular}{lll}
+			\multirow{4}{*}{\includegraphics[width=2.4cm]{logo/K-LCSI.png}} &&\\
+			&& \textbf{L}aboratoire de la \\
+			&& \textbf{C}ommunication dans les \\
+			&& \textbf{S}ystèmes \\
+			&& \textbf{I}nformatiques \\
+		\end{tabular}
+	}
+}

@@ -1,0 +1,122 @@
+
+\def\make@title{
+	
+	\noindent\begin{minipage}{\textwidth}
+		\begin{minipage}{0.3\textwidth}
+			\includegraphics[height=2cm]{\@esilogo}
+		\end{minipage}\hfill
+		\begin{minipage}{0.65\textwidth}
+			{\Huge\bfseries Thèse de doctorat}
+			
+			de l'école nationale supérieure d'informatique
+		\end{minipage}%
+	\end{minipage}
+	
+	\vspace{3cm}
+	
+	\begin{center}
+		{\large Présentée et soutenue par}
+		
+		\vspace{0.5cm}
+		
+		{\LARGE \bfseries \@author}
+	\end{center}
+	
+	\vspace{1cm}
+	
+	
+	
+	\begin{minipage}{.4\textwidth}
+		\it
+		\begin{flushleft}
+			Spécialité : 
+			
+			\textbf{Informatique} 
+			
+			\vspace{8pt}
+			
+			Date : 
+			
+			\textbf{\@date}
+			
+			\vspace{8pt}
+			
+			Directeurs :\vspace{-4pt}
+			
+			{\bfseries
+				- Pr. Djamel Eddine ZEGOUR
+				
+				- Pr. Walid Khaled HIDOUCI
+			}
+			
+			\vfill
+		\end{flushleft}
+	\end{minipage}
+	\begin{minipage}{.65\textwidth}
+		\begin{tcolorbox}[
+				enhanced jigsaw,
+				fit height from=5cm to 10cm,
+				oversize,
+				rightrule=0pt,
+				toprule=0pt,
+				bottomrule=0pt,
+				leftrule=3pt,
+				colback=white,
+				colframe=black,
+				arc=0pt,
+				outer arc=0pt,
+				titlerule=0pt,
+				bottomtitle=0pt,
+				top=0pt,
+				bottom=0pt,
+				left=8pt,
+				width=\textwidth,
+				fontupper=\itshape
+			]
+			{\Huge\bfseries \@title} 
+			
+			\vspace{0.5cm}
+			
+			\ifdefempty{\@subtitle}{}{{\LARGE \slshape ``\@subtitle"}}
+		\end{tcolorbox}
+	
+%		\begin{introduction}
+%			{\Huge\bfseries \@title} 
+%			
+%			\vspace{0.5cm}
+%			
+%			\ifdefempty{\@subtitle}{}{{\LARGE \slshape ``\@subtitle"}}
+%		\end{introduction} 
+	\end{minipage}
+	
+	
+	\vfill
+	
+	\noindent
+	\textbf{Composition du jury :}
+	
+	\noindent
+	\begin{tabular}{p{.4\textwidth}p{.1\textwidth}p{.15\textwidth}p{.25\textwidth}}
+		M. BALLA Amar & Prof & ESI & Président \\
+		Mme BENATCHBA Karima & Prof & ESI & Examinatrice \\
+		M. GUESSOUM Aberezzak & Prof & Univ. Blida & Examinateur\\
+		M. FOUDIL Cherif & Prof & Univ. Biskra & Examinateur \\
+		M. ZEGOUR Djamel Eddine & Prof & ESI & Directeur de thèse \\            
+		
+	\end{tabular}
+	
+	\vfill                  
+	
+	\noindent\hrulefill\vskip 2pt
+	
+	{ \renewcommand{\arraystretch}{0.6}
+		\noindent
+		\begin{tabular}{lll}
+			\multirow{4}{*}{\includegraphics[width=2.4cm]{logo/K-LCSI.png}} &&\\
+			&& \textbf{L}aboratoire de la \\
+			&& \textbf{C}ommunication dans les \\
+			&& \textbf{S}ystèmes \\
+			&& \textbf{I}nformatiques \\
+		\end{tabular}
+	}
+}
