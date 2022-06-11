@@ -143,7 +143,7 @@
 % Cover page
 %===============================================================
 
-% define a command to set up thhe cover page's theme
+% define a command to set up the cover page's theme
 \DeclareRobustCommand\usecovertheme[1]{%
 	\def\@author{\makename{\@firstname}{\@familyname}} % define the author's variable in case it is used by the theme
 	\usepackage{#1-cover} % call the theme which is the name followed by -cover.sty
@@ -170,3 +170,162 @@
 \pagestyle{plain}
 
 \renewcommand{\baselinestretch}{1.25} 
+
+\fancypagestyle{fancymain}{
+	\fancyhf{}
+	\renewcommand{\headrulewidth}{.4pt}
+	\fancyfoot[C]{\thepage}
+%	\fancyfoot[C]{%
+%		\rule{0.33\textwidth}{.4pt}\\[.2cm]
+%		Page \thepage\ of \pageref{LastMainPage}
+%	}
+	\fancyhead[RE]{\bfseries\nouppercase{\leftmark}}      % Chapter in the right on even pages
+	\fancyhead[LO]{\bfseries\nouppercase{\rightmark}}     % Section in the left on odd pages
+	\fancyhead[LE,RO]{}
+}
+
+\fancypagestyle{fancychap}{
+	\fancyhf{}
+	\renewcommand{\headrulewidth}{0pt}
+	\fancyfoot[C]{%
+		\rule{0.33\textwidth}{.4pt}\\[.2cm]
+		\thepage
+	}
+	%	\fancyhead{}
+}
+
+\fancypagestyle{fancyfront}{
+	\fancyhf{}
+	\renewcommand{\headrulewidth}{0pt}
+	\fancyfoot[C]{%
+		\rule{0.33\textwidth}{.4pt}\\[.2cm]
+		\thepage
+	}
+	%	\fancyhead{}
+}
+
+
+\renewcommand{\frontmatter}{%
+	\newpage
+	\pagestyle{fancyfront}
+	\pagenumbering{roman}
+}
+
+\renewcommand{\mainmatter}{%
+	\newpage
+	\pagenumbering{arabic}
+	\pagestyle{fancymain}
+}
+
+
+%===============================================================
+% Chapter Layout
+%===============================================================
+
+\newtcolorbox{quotebox}{
+	enhanced jigsaw,
+	oversize,
+	rightrule=0pt,
+	toprule=0pt,
+	bottomrule=0pt,
+	leftrule=5pt,
+	colback=white!90!black,
+	colframe=black,
+	arc=0pt,
+	outer arc=0pt,
+	%	title={Remarque :},
+	%	title style={white},
+	%	fonttitle=\color{black}\bfseries,
+	titlerule=0pt,
+	bottomtitle=0pt,
+	top=0pt,
+	bottom=0pt,
+	left=0pt,
+	enlarge left by=.5\textwidth,
+	width=0.5\textwidth,
+	fontupper=\itshape
+}
+
+\renewcommand{\thechapter}{\arabic{chapter}}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+
+
+\newif\if@numbredchap\@numbredchaptrue
+
+\def\@current@quote{}
+
+\renewcommand{\@makechapterhead}[1]{%
+	\if@openright\cleardoublepage\else\clearpage\fi
+	\vspace*{-\headheight}%
+	\thispagestyle{fancyfront}
+	\if@numbredchap%
+	\if@mainmatter%
+	\thispagestyle{fancychap}
+	{\fontsize{50}{4}\bfseries\selectfont\raggedright\thechapter\par%
+		\rule{0.25\textwidth}{2pt}\par}%
+	\fi\fi%
+	{\fontsize{30}{30}\bfseries\selectfont\raggedleft#1\par}%
+	\vspace*{1cm}%
+	\@current@quote{}
+	\@numbredchaptrue%
+	\def\@current@quote{}%
+}
+
+\renewcommand{\@makeschapterhead}[1]{\@numbredchapfalse\@makechapterhead{#1}}
+
+\RequirePackage{environ}
+
+\def\define@quote#1{\gdef\@current@quote{%
+		\begin{quotebox}%
+			#1%
+		\end{quotebox}%
+		\vspace*{1cm}%
+}}
+
+% compatibility with package "quotchap"
+\AtBeginDocument {
+	\makeatletter
+	\@ifundefined{savequote}{%
+		\newenvironment{savequote}[1][10cm]{\collect@body\define@quote}{}
+	}{}
+	
+	\@ifundefined{qauthor}{%
+		\newcommand{\qauthor}[1]{%
+			\begin{flushright}%
+				#1%
+			\end{flushright}%
+		}%
+	}{}
+	
+	\makeatother
+}
+
+
+%===============================================================
+% Lists
+%===============================================================
+
+
+\def\listabbreviations{%
+	
+	\chapter*{Liste des abbreviations}
+	\addcontentsline{toc}{chapter}{Liste des abbreviations}
+	
+	\printacronyms[include-classes=abbrev,name=]
+	
+}
+
+\let\old@listoffigures\listoffigures
+\def\listoffigures{%
+	\old@listoffigures
+	\addcontentsline{toc}{chapter}{Liste des figures}
+}
+
+\let\old@listoftables\listoftables
+\def\listoftables{%
+	\old@listoftables
+	\addcontentsline{toc}{chapter}{Liste des tables}
+}
+
+
