@@ -1,0 +1,93 @@
+\definecolor{coverback}{RGB}{255,150,150}
+\definecolor{covertext}{RGB}{150,0,0}
+
+\def\make@title{
+	
+	\begin{tikzpicture}[remember picture,overlay]
+	
+	\node[anchor=north west, text=white, minimum width=2\textwidth,minimum height=2.5cm,fill=coverback] (header)
+	at ( current page.north west)
+	{};
+	
+	\node[anchor=north west] (logo)
+	at ([shift={(3cm,0cm)}] current page.north west)
+	{\includegraphics[height=2cm]{\@esilogo}};
+	
+	\node[anchor=north west] (esititle)
+	at ([shift={(6cm,-1cm)}] current page.north west)
+	{\large\bfseries \MakeUppercase{école nationale supérieure d'informatique}};
+	
+	\node[anchor=north west, text width=\textwidth, align=center] (thesisinfo)
+	at ([shift={(3cm, -1cm)}] header.south west){
+		{\Large \bfseries\color{covertext} TH\`ESE DE DOCTORAT}\\[0.5cm]
+%		pour l'obtention du grade\\[0.5cm]
+%		{\Large \bfseries DOCTEUR DE }\\[0.25cm]
+%		{\large \bfseries \slshape L'école nationale supérieure d'informatique}\\[0.5cm]
+		Spécialité : \@speciality\\[1cm]
+		Présentée et soutenue par\\[0.5cm]
+		{\LARGE \bfseries \@author}\\[0.5cm]
+		Le \@date
+	};
+	
+	\node[anchor=north west,minimum width=\textwidth, align=center] (subjettitle)
+	at ([shift={(0cm, -1cm)}] thesisinfo.south west){
+		\begin{minipage}{\textwidth}
+		\begin{center}
+		{\Huge\bfseries\color{covertext} \@title}
+		
+		\vspace{0.5cm}
+		
+		\ifdefempty{\@subtitle}{}{{\Large \slshape \@subtitle}}
+		
+		\ifdefempty{\@supervisorlist}{}{
+			\vspace{8pt}
+			Dirégée par 
+							
+			\renewcommand*{\do}[1]{##1\\}
+			{\bfseries \dolistloop{\@supervisorlist}}
+		}
+		\end{center}
+		
+		\ifdefempty{\@jurylist}{}{
+			\renewcommand*{\do}[1]{%
+				\saveexpandmode\expandarg%
+				\StrSubstitute{##1}{,}{ & }[\tmp]%
+				\restoreexpandmode%
+				\tmp\\
+			}
+		
+			\vspace{2cm}
+			
+			\begin{flushleft}
+			\textbf{Composition du jury :}
+					
+			\begin{tabular}{p{.4\textwidth}p{.1\textwidth}p{.15\textwidth}p{.25\textwidth}}
+				\dolistloop{\@jurylist}
+			\end{tabular}
+			\end{flushleft}
+		}
+		
+		\end{minipage}
+	};
+
+	
+	\node[anchor=south west, text=white, minimum width=2\textwidth,minimum height=1.5cm,fill=coverback] (footer)
+	at ( current page.south west)
+	{};
+	
+	\node[anchor=south west, minimum width=2.5cm] (lablogo)
+	at ( [shift={(3cm, 0.5cm)}] footer.north west)
+	{\ifdefempty{\@lablogo}{}{\includegraphics[width=2.4cm]{\@lablogo}}};
+	
+	\node[anchor=north west, minimum width=\textwidth-3cm, align=left] (labtitle)
+	at ( [shift={(0cm, -0.2cm)}] lablogo.north east) {
+		\renewcommand{\arraystretch}{0.6}
+		\ifdefempty{\@labtitle}{}{
+			\begin{minipage}{\textwidth-3cm}
+			\@labtitle
+			\end{minipage}
+		}
+	};
+	
+	\end{tikzpicture}                
+}
