@@ -14,9 +14,9 @@
 		pour l'obtention du grade\\[0.5cm]
 		{\Large \bfseries DOCTEUR DE }\\[0.25cm]
 		{\large \bfseries \slshape L'école nationale supérieure d'informatique}\\[0.5cm]
-		Spécialité : Informatique\\[1cm]
+		Spécialité : \@speciality\\[1cm]
 		Présentée et soutenue par\\[0.5cm]
-		{\LARGE \bfseries \titlecap{\@firstname}\ \MakeUppercase{\@familyname}}\\[0.5cm]
+		{\LARGE \bfseries \@author}\\[0.5cm]
 		soutenue le \@date\\[1cm]
 		
 		
@@ -24,40 +24,43 @@
 		
 		\ifdefempty{\@subtitle}{}{{\LARGE \slshape ``\@subtitle"}\\[1cm]}
 		
-		Dirigée par : \textbf{Pr. ZEGOUR Djamel Eddine}
-		
-		Co-encadrée par : \textbf{Pr. HIDOUCI Walid Khaled}
+		\ifdefempty{\@supervisorlist}{}{
+			\renewcommand*{\do}[1]{##1\\}
+			Dirigée par : \begin{minipage}[t]{15em}\bfseries \dolistloop{\@supervisorlist}\end{minipage}
+		}
 	\end{center}
 	\makeatother % changes the catcode of @ back to 12
 	
-	
-	\vfill
-	
-	\noindent
-	\textbf{Composition du jury :}
-	
-	\noindent
-	\begin{tabular}{p{.4\textwidth}p{.1\textwidth}p{.15\textwidth}p{.25\textwidth}}
-		M. BALLA Amar & Prof & ESI & Président \\
-		Mme BENATCHBA Karima & Prof & ESI & Examinatrice \\
-		M. GUESSOUM Aberezzak & Prof & Univ. Blida & Examinateur\\
-		M. FOUDIL Cherif & Prof & Univ. Biskra & Examinateur \\
-		M. ZEGOUR Djamel Eddine & Prof & ESI & Directeur de thèse \\            
+	\ifdefempty{\@jurylist}{}{
+		\renewcommand*{\do}[1]{%
+			\saveexpandmode\expandarg%
+			\StrSubstitute{##1}{,}{ & }[\tmp]%
+			\restoreexpandmode%
+			\tmp\\
+		}
+		\vfill
 		
-	\end{tabular}
-	
-	\vfill                  
-	
-	\noindent\hrulefill\vskip 2pt
-	
-	{ \renewcommand{\arraystretch}{0.6}
-		\noindent
-		\begin{tabular}{lll}
-			\multirow{4}{*}{\includegraphics[width=2.4cm]{logo/K-LCSI.png}} &&\\
-			&& \textbf{L}aboratoire de la \\
-			&& \textbf{C}ommunication dans les \\
-			&& \textbf{S}ystèmes \\
-			&& \textbf{I}nformatiques \\
+		\textbf{Composition du jury :}
+		
+		\begin{tabular}{p{.4\textwidth}p{.1\textwidth}p{.15\textwidth}p{.25\textwidth}}
+			\dolistloop{\@jurylist}
 		\end{tabular}
 	}
+	
+	\vfill 
+	
+	\ifelab
+	\noindent\hrulefill\vskip 2pt
+	\renewcommand{\arraystretch}{0.6}
+	\ifdefempty{\@lablogo}{}{
+		\begin{minipage}{2.4cm}
+			\includegraphics[width=2.4cm]{\@lablogo}
+		\end{minipage}
+	}
+	\ifdefempty{\@labtitle}{}{
+		\begin{minipage}{8cm}
+			\@labtitle
+		\end{minipage}
+	}
+	\fi   
 }

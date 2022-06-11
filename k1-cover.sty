@@ -24,14 +24,12 @@
 	
 	\vspace{1cm}
 	
-	
-	
 	\begin{minipage}{.4\textwidth}
 		\it
 		\begin{flushleft}
 			Spécialité : 
 			
-			\textbf{Informatique} 
+			\textbf{\@speciality} 
 			
 			\vspace{8pt}
 			
@@ -39,14 +37,12 @@
 			
 			\textbf{\@date}
 			
-			\vspace{8pt}
-			
-			Directeurs :\vspace{-4pt}
-			
-			{\bfseries
-				- Pr. Djamel Eddine ZEGOUR
+			\ifdefempty{\@supervisorlist}{}{
+				\vspace{8pt}
+				Directeurs de thèse :
 				
-				- Pr. Walid Khaled HIDOUCI
+				\renewcommand*{\do}[1]{- ##1\\}
+				{\bfseries \dolistloop{\@supervisorlist}}
 			}
 			
 			\vfill
@@ -80,43 +76,38 @@
 			\ifdefempty{\@subtitle}{}{{\LARGE \slshape ``\@subtitle"}}
 		\end{tcolorbox}
 	
-%		\begin{introduction}
-%			{\Huge\bfseries \@title} 
-%			
-%			\vspace{0.5cm}
-%			
-%			\ifdefempty{\@subtitle}{}{{\LARGE \slshape ``\@subtitle"}}
-%		\end{introduction} 
 	\end{minipage}
 	
-	
-	\vfill
-	
-	\noindent
-	\textbf{Composition du jury :}
-	
-	\noindent
-	\begin{tabular}{p{.4\textwidth}p{.1\textwidth}p{.15\textwidth}p{.25\textwidth}}
-		M. BALLA Amar & Prof & ESI & Président \\
-		Mme BENATCHBA Karima & Prof & ESI & Examinatrice \\
-		M. GUESSOUM Aberezzak & Prof & Univ. Blida & Examinateur\\
-		M. FOUDIL Cherif & Prof & Univ. Biskra & Examinateur \\
-		M. ZEGOUR Djamel Eddine & Prof & ESI & Directeur de thèse \\            
+	\ifdefempty{\@jurylist}{}{
+		\renewcommand*{\do}[1]{%
+			\saveexpandmode\expandarg%
+			\StrSubstitute{##1}{,}{ & }[\tmp]%
+			\restoreexpandmode%
+			\tmp\\
+		}
+		\vfill
 		
-	\end{tabular}
-	
-	\vfill                  
-	
-	\noindent\hrulefill\vskip 2pt
-	
-	{ \renewcommand{\arraystretch}{0.6}
-		\noindent
-		\begin{tabular}{lll}
-			\multirow{4}{*}{\includegraphics[width=2.4cm]{logo/K-LCSI.png}} &&\\
-			&& \textbf{L}aboratoire de la \\
-			&& \textbf{C}ommunication dans les \\
-			&& \textbf{S}ystèmes \\
-			&& \textbf{I}nformatiques \\
+		\textbf{Composition du jury :}
+		
+		\begin{tabular}{p{.4\textwidth}p{.1\textwidth}p{.15\textwidth}p{.25\textwidth}}
+			\dolistloop{\@jurylist}
 		\end{tabular}
 	}
+
+	\vfill 
+
+	\ifelab
+	\noindent\hrulefill\vskip 2pt
+	\renewcommand{\arraystretch}{0.6}
+	\ifdefempty{\@lablogo}{}{
+	\begin{minipage}{2.4cm}
+		\includegraphics[width=2.4cm]{\@lablogo}
+	\end{minipage}
+	}
+	\ifdefempty{\@labtitle}{}{
+	\begin{minipage}{8cm}
+		\@labtitle
+	\end{minipage}
+	}
+	\fi                
 }
