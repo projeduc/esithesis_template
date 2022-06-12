@@ -247,8 +247,8 @@
 }
 
 \renewcommand{\thechapter}{\arabic{chapter}}
-\renewcommand{\thesection}{\arabic{section}}
-\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thesection}{\arabic{section}.}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}.}
 
 
 \newif\if@numbredchap\@numbredchaptrue
@@ -259,13 +259,31 @@
 	\if@openright\cleardoublepage\else\clearpage\fi
 	\vspace*{-\headheight}%
 	\thispagestyle{fancyfront}
+	
+	\begin{tikzpicture}
+	\node[anchor=north west, minimum width=2.5cm,minimum height=2.5cm] (ref)
+	at ([shift={(0cm,0cm)}] current page.north west){};
+	
 	\if@numbredchap%
 	\if@mainmatter%
 	\thispagestyle{fancychap}
-	{\fontsize{50}{4}\bfseries\selectfont\raggedright\thechapter\par%
-		\rule{0.25\textwidth}{2pt}\par}%
+	\node[anchor=north west, minimum width=2.5cm,minimum height=2.5cm,fill=white,draw=black,line width=2pt] 
+	at ([shift={(0cm,0cm)}] ref.north west){
+		\begin{minipage}[t!]{2cm}
+		\begin{center}
+		{\fontsize{50}{30}\bfseries\selectfont\raggedright\thechapter}\vspace{0.5cm}
+		\end{center}
+		\end{minipage}
+	};
 	\fi\fi%
-	{\fontsize{30}{30}\bfseries\selectfont\raggedleft#1\par}%
+	\node[anchor=north west, minimum width=\textwidth-2.5cm,minimum height=2.5cm] 
+	at ([shift={(0cm,0cm)}] ref.north east){
+		\begin{minipage}[t!]{\textwidth-2.8cm}
+		{\fontsize{30}{30}\bfseries\selectfont#1\par}%
+		\end{minipage}
+	};
+	\end{tikzpicture}
+	
 	\vspace*{1cm}%
 	\@current@quote{}
 	\@numbredchaptrue%
