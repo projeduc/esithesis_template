@@ -1,0 +1,108 @@
+\definecolor{esiblue}{RGB}{25,47,98} 
+
+\def\make@title{
+	
+	\begin{tikzpicture}[remember picture,overlay]
+	
+	\node[anchor=north west, text=white, minimum width=2\textwidth,minimum height=2cm,fill=esiblue] (header)
+	at (current page.north west)
+	{};
+	
+%	\node[anchor=north west] (logo)
+%	at ([shift={(0.5\textwidth+1.5cm,-0.5cm)}] header.south west)
+%	{\includegraphics[width=3cm]{\@esilogo}	};
+	\node[anchor=north west, minimum width=3.2cm] (logo)
+	at ([shift={(2.5cm,-0.5cm)}] header.south west)
+	{\includegraphics[width=2.5cm]{\@esilogo}	};
+	
+	
+	\node[anchor=north west] (esititle)
+	at ([shift={(0cm, -0.5cm)}] logo.north east)
+	{\LARGE\bfseries École \hspace{0.15cm} nationale \hspace{0.15cm} Supérieure \hspace{0.15cm} d'Informatique};
+	
+	
+	\node[anchor=north west, minimum width=\textwidth, align=center, color=white] (radp)
+	at ([shift={(2.5cm,-0.4cm)}] current page.north west)
+	{\bfseries\large République Algérienne Démocratique et Populaire\\
+	\bfseries\large	Ministère de l'Enseignement Supérieur et de la Recherche Scientifique\\
+	};
+	
+	\node[anchor=north west, text width=\textwidth, align=center] (thesisinfo)
+	at ([shift={(2.5cm, -3.7cm)}] header.south west){
+		{\fontsize{35}{12}\selectfont\bfseries\color{esiblue} \textls[175]{Thèse \hspace{0.15cm} de \hspace{0.15cm} doctorat}}\\[0.3cm]
+		\fontsize{16}{16}\selectfont
+		en\\
+		Informatique
+		\ifdefempty{\@speciality}{}{\\Spécialité : \@speciality}\\[1cm]
+		Présentée et soutenue par\\[0.2cm]
+		{\LARGE \bfseries \@author}\\[0.2cm]
+		Le \@date
+	};
+	
+	\node[anchor=north west,minimum width=\textwidth, align=center] (subjettitle)
+	at ([shift={(0cm, -1cm)}] thesisinfo.south west){ 
+		\begin{minipage}{\textwidth}
+		\begin{center}
+		
+		{\bfseries\color{esiblue}\fontsize{25}{25}\selectfont \@title\par}
+		
+		\vspace{0.5cm}
+		
+		\ifdefempty{\@subtitle}{}{{\Large \@subtitle}}
+		
+		\ifdefempty{\@supervisorlist}{}{
+			\vspace{24pt}
+			Dirigée par 
+							
+			\renewcommand*{\do}[1]{##1 \hfill}
+			{\bfseries \hfill\dolistloop{\@supervisorlist}}
+			
+			Codirigée par 
+			
+			{\bfseries \hfill\dolistloop{\@cosupervisorlist}}
+		}
+		\end{center}
+		
+		\ifdefempty{\@jurylist}{}{
+			\renewcommand*{\do}[1]{%
+				\saveexpandmode\expandarg%
+				\StrSubstitute{##1}{,}{ & }[\tmp]%
+				\restoreexpandmode%
+				\tmp\\
+			}
+		
+%			\vspace{12pt}
+			
+			\begin{flushleft}
+			\textbf{Composition du jury :}
+					
+			\begin{tabular}{p{.4\textwidth}p{.1\textwidth}p{.15\textwidth}p{.25\textwidth}}
+				\dolistloop{\@jurylist}
+			\end{tabular}
+			\end{flushleft}
+		}
+		
+		\end{minipage}
+	};
+
+	
+	\node[anchor=south west, text=white, minimum width=2\textwidth,minimum height=1.5cm,fill=esiblue] (footer)
+	at ( current page.south west)
+	{};
+	
+	\node[anchor=south west, minimum width=2.5cm] (lablogo)
+	at ( [shift={(2.5cm, 0.5cm)}] footer.north west)
+	{\ifdefempty{\@lablogo}{}{\includegraphics[width=2.4cm]{\@lablogo}}};
+	
+	\node[anchor=north west, minimum width=\textwidth-3cm, align=left] (labtitle)
+	at ( [shift={(0cm, -0.2cm)}] lablogo.north east) {
+		\renewcommand{\arraystretch}{0.6}
+		\ifdefempty{\@labtitle}{}{
+			\begin{minipage}{\textwidth-3cm}
+			\@labtitle
+			\end{minipage}
+		}
+	};
+	
+	\end{tikzpicture}                
+}

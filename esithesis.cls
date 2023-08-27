@@ -29,7 +29,7 @@
 %\RequirePackage{tocloft} % toc, lof, lot
 \RequirePackage{mdframed}
 
-\RequirePackage{graphbox} 
+%\RequirePackage{graphbox} 
 
 \usepackage{indentfirst}
 
@@ -50,6 +50,8 @@
 
 \RequirePackage{etoolbox} %list variables, if else
 \RequirePackage{xstring}
+
+\RequirePackage[tracking=true]{microtype}
 
 %===============================================================
 % Options
@@ -91,11 +93,12 @@
 \def\@title{}
 \def\@subtitle{}
 \def\@supervisorlist{}
+\def\@cosupervisorlist{}
 \def\@jurylist{}
 \def\@lablogo{}
 \def\@labtitle{}
 \def\@esilogo{logo/ESI_logo.png}
-\def\@speciality{Informatique}
+\def\@speciality{}
 
 % commands to set up cover pages informations
 \def\familyname#1{\def\@familyname{#1}}
@@ -103,12 +106,25 @@
 \def\date#1{\def\@date{#1}}
 \def\title#1{\def\@title{#1}}
 \def\subtitle#1{\def\@subtitle{#1}}
+\def\speciality#1{\def\@speciality{#1}}
 
-\newcommand\addsupervisor[3]{% firstname familyname rank
-	\listadd{\@supervisorlist}{#3\ \makename{#1}{#2}}
+%\newcommand\addsupervisor[3]{% firstname familyname rank
+%	\listadd{\@supervisorlist}{#3\ \makename{#1}{#2}}
+%}
+%
+%\newcommand\addcosupervisor[3]{% firstname familyname rank
+%	\listadd{\@cosupervisorlist}{#3\ \makename{#1}{#2}}
+%}
+
+\newcommand\addsupervisor[2]{% firstname familyname rank
+	\listadd{\@supervisorlist}{\makename{#1}{#2}}
 }
 
-\newcommand\addjury[6]{% firstname familyname rank
+\newcommand\addcosupervisor[2]{% firstname familyname rank
+	\listadd{\@cosupervisorlist}{\makename{#1}{#2}}
+}
+
+\newcommand\addjury[6]{% firstname familyname title rank university role
 	\listadd{\@jurylist}{#3\ \makename{#1}{#2},#4,#5,#6}
 }
 
@@ -116,7 +132,7 @@
 \def\labtitle#1{\def\@labtitle{#1}\elabtrue}
 
 \def\lablcsi{
-	\lablogo{logo/K-LCSI.png}
+	\lablogo{logo/K-LCSI_logo.png}
 	\labtitle{
 		\begin{tabular}{l}
 			\textbf{L}aboratoire de la \\
@@ -128,7 +144,7 @@
 }
 
 \def\lablmcs{
-	\lablogo{logo/LMCS.png}
+	\lablogo{logo/LMCS_logo.png}
 	\labtitle{
 		\begin{tabular}{l}
 			\textbf{L}aboratoire de \\
@@ -146,12 +162,12 @@
 % define a command to set up the cover page's theme
 \DeclareRobustCommand\usecovertheme[1]{%
 	\def\@author{\makename{\@firstname}{\@familyname}} % define the author's variable in case it is used by the theme
-	\usepackage{#1-cover} % call the theme which is the name followed by -cover.sty
+	\usepackage{cover/#1-cover} % call the theme which is the name followed by -cover.sty
 	\def\maketitle { %redefine the command which makes the title page
 		\phantomsection
 		\addcontentsline{toc}{part}{\@title} % add the page to the table of contents
 		\pagestyle{empty} % define an empty page
-		\newgeometry{left=3cm,right=2cm,top=1cm,bottom=1cm} % modify the page layout
+		\newgeometry{left=2.5cm,right=2cm,top=1cm,bottom=1cm} % modify the page layout
 		\setlength\parindent{0pt} % set the indentation to 0 (no indentation)
 		\make@title %call the command which actualy makes the title; it must e redefined in the theme file
 		\restoregeometry %restore the default page layout
@@ -213,6 +229,7 @@
 
 \renewcommand{\mainmatter}{%
 	\newpage
+	\setlength\parindent{1.25cm}
 	\pagenumbering{arabic}
 	\pagestyle{fancymain}
 }
@@ -247,8 +264,8 @@
 }
 
 \renewcommand{\thechapter}{\arabic{chapter}}
-\renewcommand{\thesection}{\arabic{section}.}
-\renewcommand{\thesubsection}{\thesection.\arabic{subsection}.}
+\renewcommand{\thesection}{\thechapter.\arabic{section}.}
+\renewcommand{\thesubsection}{\thesection\arabic{subsection}.}
 
 
 \newif\if@numbredchap\@numbredchaptrue
@@ -269,7 +286,7 @@
 	\thispagestyle{fancychap}
 	\node[anchor=north west, minimum width=2.5cm,minimum height=2.5cm,fill=white,draw=black,line width=2pt] 
 	at ([shift={(0cm,0cm)}] ref.north west){
-		\begin{minipage}[t!]{2cm}
+		\begin{minipage}{2cm}\vspace{0.5cm}
 		\begin{center}
 		{\fontsize{50}{30}\bfseries\selectfont\raggedright\thechapter}\vspace{0.5cm}
 		\end{center}
